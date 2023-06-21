@@ -46,6 +46,7 @@ public class OrderTest {
         Order order = new Order();
         for(int i=0;i<3;i++){
             Item item = this.createItem();
+            itemRepository.save(item);
             OrderItem orderItem = new OrderItem();
             orderItem.setItem(item);
             orderItem.setCount(10);
@@ -53,7 +54,7 @@ public class OrderTest {
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
         }
-        orderRepository.saveAndFlush(order);//여기서오류
+        orderRepository.saveAndFlush(order);//여기서오트
         em.clear();
         Order savedOrder = orderRepository.findById(order.getId()).orElseThrow(EntityNotFoundException::new);
         assertEquals(3, savedOrder.getOrderItems().size());
