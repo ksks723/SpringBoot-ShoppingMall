@@ -1,6 +1,7 @@
 package com.shop.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 public class CartItem {
     @Id
@@ -17,4 +18,6 @@ public class CartItem {
     private Item item;//하나의 상품은 여러 장바구니에 상품으로 담길 수 있으므로 다대일 관계 @ManyToOne
 
     private int count;//같은 상품을 장바구니에 몇개담을지 결정한다.
+    private LocalDateTime regTime;
+    private LocalDateTime updateTime;
 }
