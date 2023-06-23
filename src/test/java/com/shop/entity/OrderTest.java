@@ -3,6 +3,7 @@ package com.shop.entity;
 import com.shop.constant.ItemSellStatus;
 import com.shop.repository.ItemRepository;
 import com.shop.repository.MemberRepository;
+import com.shop.repository.OrderItemRepository;
 import com.shop.repository.OrderRepository;
 import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,8 @@ public class OrderTest {
     EntityManager em;
     @Autowired
     MemberRepository memberRepository;
-
+    @Autowired
+    OrderItemRepository orderItemRepository;
     public Item createItem() {
         Item item = new Item();
         item.setItemNm("테스트상품");
@@ -90,5 +92,23 @@ public class OrderTest {
         Order order = this.createOrder();
         order.getOrderItems().remove(0);
         em.flush();
+    }
+
+    @Test
+    @DisplayName("지연 로딩 테스트")
+    public void lazyLoadingTest(){
+        Order order = this.createOrder();
+        Long orderItemId = order.getOrderItems().get(0).getId();
+        em.flush();
+        em.clear();
+
+        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        System.out.println("order class : " + orderItem.getOrder().getClass());
+        System.out.println("=================================");
+        orderItem.getOrder().getOrderDate();// OrderItem.clss에서 지연로딩 옵션을 추가해줬기때문에 orderitem만 조회한다. (추가전에는 연관엔티티 전부가져옴)
+        //다만 어노테이션별로 다르기때문에 연관관계 전부다 fetch = FetchType.LAZY로 지연로딩 설정해준다.
+        System.out.println("=================================");
     }
 }

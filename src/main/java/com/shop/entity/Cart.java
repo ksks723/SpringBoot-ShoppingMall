@@ -17,7 +17,7 @@ public class Cart{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id") // cart테이블은 member_id 컬럼을 외래키로 갖는다.
     private Member member;
 }
