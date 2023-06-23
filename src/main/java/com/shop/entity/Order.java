@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name="orders")//정렬 명령어 "order"과 겹치기 때문에 "orders" 로 한다.
 @Getter@Setter
-public class Order {
+public class Order extends BaseEntity{
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -35,6 +35,6 @@ public class Order {
     //속성의 값으로 "order"를 적어준 이유는 OrderItem 에 있는 Order에 의해 관리된다는 의미로 해석한다.
     //즉 , 연관 관계상 주인필드인 order를 mappedBy의 값으로 세팅하면 된다.
 
-    private LocalDateTime regTime;
-    private LocalDateTime updateTime;
+//    private LocalDateTime regTime;         BaseEntity를 상속받음으로써 더이상 필요없기에 없앤다.
+//    private LocalDateTime updateTime;
 }
