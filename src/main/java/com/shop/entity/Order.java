@@ -28,7 +28,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus; //주문상태
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)//
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, orphanRemoval = true)//
     private List<OrderItem> orderItems = new ArrayList<>();//하나의 주문이 여러개의 주문 상품을 갖으므로 List자료형을 사용해서 매핑
     //주문 상품 엔티티와 일대다 매핑함. 외래키(order_id)가 order_item테이블에 있으므로 연관 관게의 주인은 OrderItem 엔티티이다.
     //Order 엔티티가 주인이 아니므로 "mappedBy"속성으로 연관관계의 주인을 설정한다.
