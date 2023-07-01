@@ -3,6 +3,7 @@ package com.shop.entity;
 import com.shop.constant.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.awt.*;
@@ -37,4 +38,27 @@ public class Order extends BaseEntity{
 
 //    private LocalDateTime regTime;         BaseEntity를 상속받음으로써 더이상 필요없기에 없앤다.
 //    private LocalDateTime updateTime;
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);//Order엔티티와 OrderITem 엔티티가 양방향 참조관계이므로 orderITem 객체에도 order 객체를 세팅한다.
+    }
+
+    public static Order createOrder(Member member,List<OrderItem> orderItemList){
+        Order order = new Order();
+        order.setMember(member);//상품을 주문한 회원정보 세팅
+        for(OrderItem orderItem:orderItemList){//여러개 주문한 경우
+            order.addOrderItem(orderItem);
+        }
+        order.setOrderStatus(OrderStatus.ORDER);//주문상태 세팅
+        order.setOrderDate(LocalDateTime.now());//주문시간 세팅
+        return order;
+    }
+
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderItem orderItem : orderItems){
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }
