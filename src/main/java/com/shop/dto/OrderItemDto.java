@@ -1,0 +1,22 @@
+package com.shop.dto;
+
+import com.shop.entity.OrderItem;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
+
+@Getter
+@Setter
+public class OrderItemDto {
+    public OrderItemDto(OrderItem orderItem,String imgUrl){
+        this.itemNm = orderItem.getItem().getItemNm();
+        this.count = orderItem.getCount();
+        this.orderPrice = orderItem.getOrderPrice();
+        this.imgUrl = imgUrl;
+    }
+    private String itemNm;
+    private int count;
+    private int orderPrice;//주문금액
+    private String imgUrl;//상품 이미지 경로
+}
+
