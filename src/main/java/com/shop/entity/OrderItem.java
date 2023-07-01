@@ -37,4 +37,7 @@ public class OrderItem extends BaseEntity{
     public int getTotalPrice(){
         return orderPrice*count;
     }
+    public void cancel(){
+        this.getItem().addStock(count);//주문 취소시 최소수량만큼 재고증가
+    }
 }
