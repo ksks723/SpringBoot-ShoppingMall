@@ -36,4 +36,8 @@ public class CartItem extends BaseEntity{
     public void addCount(int count){//기존에 있는걸 추가로담을때 필요
         this.count += count;
     }
+
+    public void updateCount(int count){
+        this.count = count;
+    }
 }

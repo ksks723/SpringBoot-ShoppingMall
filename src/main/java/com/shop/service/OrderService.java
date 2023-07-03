@@ -102,7 +102,7 @@ public class OrderService {
         Member member = memberRepository.findByEmail(email);
         List<OrderItem> orderItemList = new ArrayList<>();
 
-        for (OrderDto orderDto : orderDtoList) {
+        for (OrderDto orderDto : orderDtoList) {//주문할 상품 리스트를 만든다.
             Item item = itemRepository.findById(orderDto.getItemId())
                     .orElseThrow(EntityNotFoundException::new);
 
@@ -110,7 +110,7 @@ public class OrderService {
             orderItemList.add(orderItem);
         }
 
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(member, orderItemList);//주문 엔티티 생성
         orderRepository.save(order);
 
         return order.getId();
